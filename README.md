@@ -1,5 +1,7 @@
 # tomato_gzdoom_mod
 
+1:1 rekreacija prosjecnog radnog dana konobara u restoranu TOMATO Medjugorje.
+
 > [!IMPORTANT]
 > 
 > make sure you have gzdoom 4.10+.
