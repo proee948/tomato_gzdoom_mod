@@ -1,1 +1,19 @@
 # tomato_gzdoom_mod
+
+> [!IMPORTANT]
+> 
+> make sure you have gzdoom 4.10+.
+
+| Dependency | Version | Notes |
+|------------|---------|-------|
+| [GZDoom](https://zdoom.org/downloads) | 4.10+ | Source port |
+| DOOM2.WAD | — | Commercial IWAD required |
+
+
+once you have iwad and gzdoom, download mymap.wad and mymod.pk3 from RELEASES (v.1).
+
+once that is done run the following command in terminal
+
+```bash
+gzdoom -iwad DOOM2.WAD -file MyMod.pk3
+```
