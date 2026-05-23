@@ -24,7 +24,6 @@ class ljudska_nula : Actor replaces DoomImp
     DeathSound "kira/cry2";
     }
 
-
 States
 {
 	Spawn:
@@ -185,8 +184,6 @@ class CRYPTO_GRACANIN : LostSoul replaces LostSoul
     }
 }
 
-
-
 class LORD_blatnice : PainElemental replaces PainElemental
 {
     Default
@@ -328,14 +325,6 @@ class mladifest: EventHandler
     }
 }
 
-
-
-
-
-
-
-
-
 class CustomCigarette : Weapon replaces Pistol
 {
     Default
@@ -400,7 +389,6 @@ class CustomCigarette : Weapon replaces Pistol
     }
 }
 
-
 class PistolReplacerHandler : EventHandler
 {
     override void PlayerEntered(PlayerEvent e)
@@ -417,8 +405,6 @@ class PistolReplacerHandler : EventHandler
         }
     }
 }
-
-
 
 class jumpscare_bait : DoomWeapon 
 {
@@ -465,8 +451,6 @@ class jumpscare_bait : DoomWeapon
     }
 }
 
-
-
 class rocket_sipak : Rocket replaces Rocket
 {
     Default
@@ -505,8 +489,6 @@ class rocket_sipak : Rocket replaces Rocket
         Stop;
     }
 }
-
-
 
 class DoomImp2 : Actor	replaces ZombieMan
 {
