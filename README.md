@@ -17,4 +17,4 @@ once that is done run the following command in terminal
 ```bash
 gzdoom -iwad doom2.wad -file mymod.pk3 mymap.wad
 ```
-everything except textures and sound will be included in contents of repository, this is purely for display not for running the mod itself, DOWNLOAD THE RELEASE NOT THE REPO!
+repo itself contains only source code without assets
