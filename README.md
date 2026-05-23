@@ -14,7 +14,7 @@
 
 once you have iwad and gzdoom, download mymap.wad and mymod.pk3 from RELEASES (v.1).
 
-once that is done run the following command in terminal
+once that is done run the following command in terminal(from the same folder)
 
 ```bash
 gzdoom -iwad doom2.wad -file mymod.pk3 mymap.wad
