@@ -1,0 +1,11 @@
+DoomEdNums
+{
+    9445 = gojo
+	9446 = jumpscare_bait
+}
+GameInfo
+{
+   AddEventHandlers = "mladifest"
+   AddEventHandlers = "PistolReplacerHandler"
+}
+

@@ -1,0 +1,30 @@
+coachgun/reload1	DSCOCHR1
+coachgun/reload2	DSCOCHR2
+coachgun/reload3	DSCOCHR3
+coachgun/fire		DSCOCHFG
+gojo/heal			DSGOJO
+zlab/cry			DSZLAB
+zlab/tweak			TWEAKZ
+kira/jumpscare		KIRASCAR
+kira/cry			KIRACRY
+kira/cry2			KIRACRY2
+kira/summon			KIRASUM
+
+cig/sound1   CIGSND1
+cig/sound2   CIGSND2
+cig/sound3   CIGSND3
+cig/sound4   CIGSND4
+cig/sound5   CIGSND5
+cig/sound6   CIGSND6
+cig/sound7   CIGSND7
+cig/sound8   CIGSND8
+cig/sound9   CIGSND9
+cig/sound10  CIGSND10
+cig/sound11  CIGSND11
+cig/sound12	 CIGSND12	
+cig/sound13	 CIGSND13
+cig/sound14	 CIGSND14
+cig/sound15	 CIGSND15
+cig/sound16	 CIGSND16
+
+$random weapons/cigfire { cig/sound1 cig/sound2 cig/sound3 cig/sound4 cig/sound5 cig/sound6 cig/sound7 cig/sound8 cig/sound9 cig/sound10 cig/sound11 cig/sound12 cig/sound13 cig/sound14 cig/sound15 cig/sound16 }

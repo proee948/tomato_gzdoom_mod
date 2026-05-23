@@ -1,0 +1,546 @@
+version "4.0"
+
+class ljudska_nula : Actor replaces DoomImp
+{
+	int aura_counter;
+    Default
+    {
+    Health 5000;
+    Radius 20;
+	+BOSS;
+	+NOINFIGHTING;
+    Height 80;
+	XScale 0.1; 
+    YScale 0.1;  
+    PainChance 200;
+    Speed 10;
+    Monster;
+	MaxTargetRange 2048;
+    +SOLID  
+    +SHOOTABLE
+    +FLOORCLIP
+    SeeSound "kira/cry";
+    PainSound "kira/cry";
+    DeathSound "kira/cry2";
+    }
+
+
+States
+{
+	Spawn:
+		TTTT A 10 A_Look;
+		TTTT A 3 {A_Wander(); A_Look();}
+		TTTT B 3 {A_Wander(); A_Look();}
+		TTTT C 3 {A_Wander(); A_Look();}
+		TTTT D 3 {A_Wander(); A_Look();}
+		TTTT E 3 {A_Wander(); A_Look();}
+		TTTT F 3 {A_Wander(); A_Look();}
+		TTTT G 3 {A_Wander(); A_Look();}
+		TTTT H 3 {A_Wander(); A_Look();}
+		TTTT I 3 {A_Wander(); A_Look();}
+		TTTT J 3 {A_Wander(); A_Look();}
+		TTTT K 3 {A_Wander(); A_Look();}
+		TTTT L 3 {A_Wander(); A_Look();}
+		Loop;
+		
+	See:
+		TTTT A 1
+		{
+		aura_counter++;
+		}
+		TTTT AAABBBCCC 3 A_Chase;
+		TTTT A 0 A_Jump(120,"Missile");
+		TTTT A 0
+		{ 
+			if (aura_counter > 20)
+			{
+				return ResolveState("summon_minions");
+			}
+			else {return ResolveState("See");}
+			
+		}
+		Loop;
+		
+	Missile:
+		PROJ AAAABBBB 5;
+		PROJ CCCCCC 5 A_CyberAttack;
+		PROJ C 1 A_StartSound("kira/cry2",CHAN_AUTO);
+		Goto See;
+	
+	summon_minions:
+	SUMM A 1 A_StartSound("kira/summon",CHAN_AUTO);
+	SUMM ABCD 35
+	{
+	Actor.Spawn("DoomImp2", (544.0,5057.0,1600));
+	Actor.Spawn("DoomImp2", (384.0,4992.0,1600));
+	Actor.Spawn("DoomImp2", (576.0,4864.0,1600));
+	Actor.Spawn("DoomImp2", (768.0,4960.0,1600));
+	Actor.Spawn("DoomImp2", (-648.0,3488.0,1600));
+	Actor.Spawn("DoomImp2", (-672.0,3584.0,1600));
+	Actor.Spawn("DoomImp2", (-576.0,3584.0,1600));
+	Actor.Spawn("DoomImp2", (-1984.0,5216.0,1600));
+	
+	Actor.Spawn("jumpscare_bait", (544.0,5057.0,1600));
+	Actor.Spawn("jumpscare_bait", (384.0,4992.0,1600));
+	Actor.Spawn("jumpscare_bait", (576.0,4864.0,1600));
+	Actor.Spawn("jumpscare_bait", (768.0,4960.0,1600));
+	Actor.Spawn("jumpscare_bait", (-648.0,3488.0,1600));
+	Actor.Spawn("jumpscare_bait", (-672.0,3584.0,1600));
+	Actor.Spawn("jumpscare_bait", (-576.0,3584.0,1600));
+	Actor.Spawn("jumpscare_bait", (-1984.0,5216.0,1600));
+	Actor.Spawn("jumpscare_bait", (-2016,4576,0));
+	Actor.Spawn("jumpscare_bait", (-1920,3936,0));
+	Actor.Spawn("jumpscare_bait", (-768,4320,0));
+	Actor.Spawn("jumpscare_bait", (-864,4928,0));
+	Actor.Spawn("jumpscare_bait", (-192,4416,0));
+	Actor.Spawn("jumpscare_bait", (384,3808,0));
+	Actor.Spawn("jumpscare_bait", (928,4384,0));
+
+	Console.printf("NEMOGU U MOSTAR MORAM U MOSTAR");
+	aura_counter = 0;
+	}
+	Goto See;
+		
+	Death:
+		POSS A 1;
+		Stop;
+		}
+}
+
+class gojo : Weapon
+{
+    Default
+    {
+        Weapon.SlotNumber 9;
+        Weapon.SelectionOrder 9000; 
+        +INVENTORY.AUTOACTIVATE;
+    }
+
+	    States
+    {
+    Select:
+        TNT1 A 0 A_Overlay(10, "DeployHand");
+        TNT1 A 1 A_Raise;
+        Loop;
+
+    Ready:
+        TNT1 A 1 A_WeaponReady;
+        Loop;
+
+    Deselect:
+        TNT1 A 1 A_Lower;
+        Loop;
+
+    Fire:
+        TNT1 A 0 
+        {
+            A_GiveInventory("Health", 70);
+            A_StartSound("gojo/heal", CHAN_WEAPON);
+            A_Overlay(10, "DeployHand"); 
+			
+        }
+        TNT1 A 35; 
+        Goto Ready;
+
+    DeployHand:
+        TOMA A 16 A_OverlayOffset(10, -12, -35);
+        TOMA BCDEFGHIJ 4; 
+    StaticHand:
+        TOMA K 1;
+        Loop;     
+    }
+
+
+}
+
+class CRYPTO_GRACANIN : LostSoul replaces LostSoul
+{
+    Default
+    {
+        RenderStyle "Normal"; 
+    }
+
+    States
+    {
+    Spawn:
+        KREH A 10 A_Look;
+        Loop;
+    See:
+        KREH A 6 A_Chase;
+        Loop;
+    Missile:
+        KREH A 10 A_FaceTarget;
+        KREH A 4 A_SkullAttack; 
+        KREH A 4;
+        Goto Missile+2;
+    Pain:
+        KREH A 3;
+        KREH A 3 A_Pain;
+        Goto See;
+    Death:
+        KREH A 5 A_Scream;
+        KREH A 5 A_NoBlocking;
+        HEAD L -1;
+        Stop;
+    }
+}
+
+
+
+class LORD_blatnice : PainElemental replaces PainElemental
+{
+    Default
+    {
+        RenderStyle "Normal"; 
+    }
+    States
+    {
+    Spawn:
+        VUCK A 10 A_Look;
+        Loop;
+    See:
+        VUCK A 6 A_Chase;
+        Loop;
+    Missile:
+        VUCK A 10 A_FaceTarget;
+        VUCK A 4 A_PainAttack;  
+        Goto See;
+    Pain:
+        VUCK A 3;
+        VUCK A 3 A_Pain;
+        Goto See;
+    Death:
+        VUCK A 5 A_Scream;
+        VUCK A 5 A_NoBlocking;
+        VUCK A 5 A_PainDie;     
+        HEAD L -1;
+        Stop;
+    }
+}
+
+class MARKO_BJELKAN: ShotgunGuy replaces ShotgunGuy
+{
+  Default
+    {
+        RenderStyle "Normal";
+        +FRIENDLY
+        -SHOOTABLE
+        -SOLID
+    }
+    States
+    {
+    Spawn:
+        MARK A -1;
+        Stop;
+    }
+}
+
+class JumpscareTicker : Inventory
+{
+    int timer;
+    int phase;
+    int repeatCount;
+    
+    string colors[12];
+    
+    override void BeginPlay()
+    {
+        Super.BeginPlay();
+        colors[0] = "Red";
+        colors[1] = "Orange";
+        colors[2] = "Yellow";
+        colors[3] = "Green";
+        colors[4] = "Cyan";
+        colors[5] = "Blue";
+        colors[6] = "Purple";
+        colors[7] = "Magenta";
+        colors[8] = "Pink";
+        colors[9] = "White";
+        colors[10] = "Black";
+        colors[11] = "Brown";
+    }
+    
+    override void Tick()
+    {
+        Super.Tick();
+        timer--;
+        if (timer <= 0)
+        {
+            if (phase < 12)
+            {
+                owner.A_SetBlend(colors[phase], 1.0, 6);
+                timer = 6; 
+                phase++;
+            }
+            else if (repeatCount < 2) 
+            {
+                phase = 0;
+                repeatCount++;
+            }
+            else
+            {
+                phase = 0;
+				repeatCount = 0;
+            }
+        }
+    }
+}
+
+class mladifest: EventHandler
+{
+ override void WorldThingDied(WorldEvent e)
+    {
+        if (e.Thing && e.Thing.GetClassName() == "Spectre")
+        {
+            Console.Printf("MLADIFEST POCINJE");
+			Console.Printf("TURISTI DOLAZE");
+    
+            PlayerInfo p = players[consoleplayer];
+            if (p && p.mo)
+            {
+                Actor plr = p.mo;
+                Vector3 behindPos = plr.Vec3Angle(-64, plr.angle, 0);//behind player calc 
+                Actor.Spawn("LostSoul", behindPos);  // Spawn scares
+				Actor.Spawn("LostSoul", (1760,320,0));
+				Actor.Spawn("ChaingunGuy", (1536, 224,0));
+				Actor.Spawn("Cacodemon", (-2368,192,0));
+				Actor.Spawn("LostSoul", (-3360, 160,0));
+				Actor.Spawn("LostSoul", (-3712, 192,0));
+				Actor.Spawn("LostSoul", (-4064, 192,0));
+				Actor.Spawn("LostSoul", (-4416, 192,0));
+				Actor.Spawn("LostSoul", (-5504, 192,0));
+				Actor.Spawn("LostSoul", (-4416, 160,0));
+				Actor.Spawn("LostSoul", (-4416, 161,0));
+				Actor.Spawn("LostSoul", (-1248, 1184,0));
+				Actor.Spawn("LostSoul", (-1024, 1024,0));
+				Actor.Spawn("Arachnotron", (704, 1248,0));
+				Actor.Spawn("Cyberdemon", (32, 768,0));
+				Actor.Spawn("Revenant", (-1568, 1408,0));
+				
+                plr.A_StartSound("zlab/cry", CHAN_AUTO);
+				plr.A_StartSound("zlab/tweak", CHAN_AUTO);
+
+                // lobotomize the player with colors
+               JumpscareTicker ticker = JumpscareTicker(plr.GiveInventoryType("JumpscareTicker"));
+				if (ticker) ticker.timer = 1;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+class CustomCigarette : Weapon replaces Pistol
+{
+    Default
+    {
+        Weapon.SelectionOrder 9001;
+        Weapon.SlotNumber 2;
+        Weapon.AmmoUse 0;
+        Weapon.AmmoGive 20;
+        Inventory.PickupMessage "valja izdundulit jednu cava";
+        +WEAPON.WIMPY_WEAPON
+    }
+    States
+    {
+    Ready:
+        CIGG A 1 A_WeaponReady;
+        Loop;
+    Deselect:
+        CIGG A 1 A_Lower(12);
+        Loop;
+    Select:
+        CIGG A 1 A_Raise(12);
+        Loop;
+		
+	    Fire:
+        CIGG A 6 A_SetSpeed(0.3); 
+        CIGG B 6 A_FireBullets(5.6, 0, 1, 5, "BulletPuff");
+        CIGG B 0 A_StartSound("weapons/cigfire", CHAN_WEAPON);
+        
+        
+        CIGG C 6 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGG D 6; 
+        CIGG E 6 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGG F 6; 
+        CIGG G 6 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGG H 6;
+        CIGF D 6 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGF E 6; 
+        CIGF F 6 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGF G 6; 
+        CIGF H 6 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGF I 6;
+        CIGS A 6 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGS B 6; 
+        CIGS C 6 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGS D 6; 
+        CIGS E 10 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGS F 10;
+        CIGS G 10 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGS H 10; 
+        CIGS I 10 { A_GiveInventory("Health", 1); A_GiveInventory("ArmorBonus", 1); }
+        CIGG I 10;
+        
+        
+        CIGG A 0 A_SetSpeed(1.0); 
+        Goto Ready;
+
+        Goto Ready;
+    Spawn:
+        WSTG A -1;
+        Stop;
+		
+    }
+}
+
+
+class PistolReplacerHandler : EventHandler
+{
+    override void PlayerEntered(PlayerEvent e)
+    {
+        let plr = players[e.PlayerNumber].mo;
+        if (plr)
+        {
+            
+            plr.TakeInventory("Pistol", 1);
+            
+           
+            plr.GiveInventory("CustomCigarette", 1);
+            plr.A_SelectWeapon("CustomCigarette");
+        }
+    }
+}
+
+
+
+class jumpscare_bait : DoomWeapon 
+{
+    Default
+    {
+        Weapon.SlotNumber 5; 
+        +INVENTORY.AUTOACTIVATE;
+		+INVENTORY.UNCLEARABLE;
+		+INVENTORY.UNDROPPABLE;
+		Weapon.SelectionOrder 1;
+		Weapon.AmmoType "Clip";
+		Weapon.AmmoGive 1;
+		Weapon.AmmoUse 1;
+    }
+
+	    States
+    {
+    Spawn:
+        KIRA Z -1;
+        Stop;
+
+    Select:
+        KIRA A 1 A_Raise(1); 
+        Loop; 
+
+    Ready:
+		KIRA A 0 A_StartSound("kira/jumpscare ", CHAN_AUTO);
+        Goto DeployHand;
+
+    DeployHand:
+        KIRA A 16 A_OverlayOffset(10, -12, -35);
+        KIRA A 4;
+        KIRA A 1 A_WeaponReady(WRF_NOFIRE | WRF_NOSWITCH); 
+        Goto Deselect;
+
+    Deselect:
+        KIRA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Lower(2);
+		
+        KIRA A 0 A_TakeInventory("jumpscare_bait", 1); 
+
+    Fire:
+        KIRA A 1;
+        Goto Ready;
+    }
+}
+
+
+
+class rocket_sipak : Rocket replaces Rocket
+{
+    Default
+    {
+		+BOUNCEONWALLS;
+		+BOUNCEAUTOOFF;
+        Speed 35;           
+        Damage 15;          
+        Scale 1.25;         
+    }
+
+    States
+    {
+    Spawn:
+        // Flying state
+        MISL A 1 Bright 
+		{
+		Speed -= 0.3;
+			if (Speed <= 0)
+			{
+				return ResolveState("Death");
+			}else{return ResolveState(NULL);}
+		}
+		
+        Loop;
+
+    Death:
+        MISL B 0 Bright
+        {
+            A_Explode(160, 160); 
+        }
+        // Vanilla explosion animation framesdo not modify
+        MISL B 8 Bright;
+        MISL C 6 Bright;
+        MISL D 4 Bright;
+        Stop;
+    }
+}
+
+
+
+class DoomImp2 : Actor	replaces ZombieMan
+{
+	Default
+	{
+		Health 1;
+		Monster;
+		Speed 15;
+	}
+	 states
+    {
+    Spawn:
+        MMMM A 10 A_Look();
+        Loop;
+    See:
+        MMMM AAAABBBB 1 A_Chase();
+        Loop;
+    Missile:
+        POSS E 10 A_FaceTarget();
+        POSS F 8 A_PosAttack();
+        POSS E 8 A_StartSound("kira/cry"); 
+        Goto See;
+    Pain:
+        POSS G 3;
+        POSS G 3 A_Pain();
+        Goto See;
+    Death:
+    POSS H 5;
+    POSS I 5 A_Scream();
+    POSS J 5 A_NoBlocking();
+    POSS K 5;
+    POSS L 5;
+    POSS M 300;             
+    POSS M 1 A_FadeOut(0.1); 
+    Wait;                    
+    }
+}
